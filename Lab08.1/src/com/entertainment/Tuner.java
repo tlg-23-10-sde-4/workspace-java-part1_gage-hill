@@ -25,6 +25,7 @@ class Tuner {
     private String channel = "Menu";
     private int station;  // internal tuner frequency for the named channel
 
+
     public void setChannel(String channel) {
         this.channel = channel;
         findStation(channel);
