@@ -76,6 +76,6 @@ public class Department {
     }
 
     public String toString() {
-        return "Department: name=" + getName() + ", location=" + getLocation();
+        return String.format("Department: name=%s, location=%s", getName(), getLocation());
     }
 }

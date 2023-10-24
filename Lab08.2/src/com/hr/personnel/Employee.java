@@ -28,9 +28,11 @@ public class Employee {
 
     // constructors
     public Employee() {
+        super();
     }
 
     public Employee(String name, LocalDate hireDate) {
+        super();
         setName(name);
         setHireDate(hireDate);
     }
@@ -58,6 +60,6 @@ public class Employee {
     }
 
     public String toString() {
-        return "Employee: name=" + getName() + ", hireDate=" + getHireDate();
+        return String.format("Employee: name=%s, hireDate=%s", getName(), getHireDate());
     }
 }

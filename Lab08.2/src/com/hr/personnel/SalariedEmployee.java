@@ -3,9 +3,10 @@ package com.hr.personnel;
 import java.time.LocalDate;
 
 public class SalariedEmployee extends Employee {
-    private double salary =100_000;
+    private double salary;
 
     public SalariedEmployee() {
+        super(); // a superclass conductor must be called
     }
 
     public SalariedEmployee(String name, LocalDate hireDate) {
@@ -13,7 +14,7 @@ public class SalariedEmployee extends Employee {
     }
 
     public SalariedEmployee(String name, LocalDate hireDate, double salary) {
-        super(name, hireDate);
+        this(name, hireDate);
         setSalary(salary);
     }
 
@@ -26,6 +27,6 @@ public class SalariedEmployee extends Employee {
     }
 
     public String toString() {
-        return "SalariedEmployee: " + "name="+ getName() + ", hireDate=" + getHireDate() + ", salary=" + getSalary();
+        return String.format("SalariedEmployee: name=%s, hireDate=%s, salary=%s", getName(), getHireDate(), getSalary());
     }
 }

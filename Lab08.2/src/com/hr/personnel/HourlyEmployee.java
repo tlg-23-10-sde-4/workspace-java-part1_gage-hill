@@ -4,9 +4,10 @@ import java.time.LocalDate;
 
 public class HourlyEmployee extends Employee {
     private double rate;
-    private double hours = 40;
+    private double hours;
 
     public HourlyEmployee() {
+        super();
     }
 
     public HourlyEmployee(String name, LocalDate hireDate) {
@@ -14,7 +15,7 @@ public class HourlyEmployee extends Employee {
     }
 
     public HourlyEmployee(String name, LocalDate hireDate, double rate, double hours) {
-        super(name, hireDate);
+        this(name, hireDate);
         setRate(rate);
         setHours(hours);
     }
@@ -36,6 +37,7 @@ public class HourlyEmployee extends Employee {
     }
 
     public String toString() {
-        return "HourlyEmployee: " + "name=" + getName() + ", hireDate=" + getHireDate() + ", rate=" + getRate() + ", hours=" + getHours();
+        return String.format("HourlyEmployee: name=%s, hireDate=%s, rate=%s, hours=%s", getName(), getHireDate(),
+                getRate(), getHours());
     }
 }
