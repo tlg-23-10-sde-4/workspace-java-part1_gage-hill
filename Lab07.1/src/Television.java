@@ -1,7 +1,7 @@
 /*
  * Business class to model the workings of a television.
  */
-public class Television {
+class Television {
     // static variables - shared among all instances, can only touch other static variables
     public static final int MIN_VOLUME = 0;
     public static final int MAX_VOLUME = 100;
