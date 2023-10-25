@@ -12,6 +12,7 @@ import com.hr.personnel.Department;
 import com.hr.personnel.Employee;
 import com.hr.personnel.HourlyEmployee;
 import com.hr.personnel.SalariedEmployee;
+import com.hr.personnel.Executive;
 
 import java.time.LocalDate;
 
@@ -30,6 +31,7 @@ class HRClient {
         dept.addEmployee(new HourlyEmployee("Gage", LocalDate.of(2020, 11, 10), 35.00, 30.00));
         dept.addEmployee(new SalariedEmployee("Jason", LocalDate.of(1990, 8, 24), 1175.00));
         dept.addEmployee(new SalariedEmployee("Elizabeth", LocalDate.of(2023, 10, 10), 2700.00));
+        dept.addEmployee(new Executive("Mia", LocalDate.of(1999, 12, 5), 100_000));
 
         // list its Employees
         System.out.println("\nList employees:");
@@ -42,5 +44,9 @@ class HRClient {
         // make its Employees pay
         System.out.println("\nMake employees pay:");
         dept.payEmployees();
+
+        // forced holidayBreak
+        System.out.println("\nForced holiday break:");
+        dept.holidayBreak();
     }
 }

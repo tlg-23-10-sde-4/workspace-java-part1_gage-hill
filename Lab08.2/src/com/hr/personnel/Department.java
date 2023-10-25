@@ -59,6 +59,22 @@ public class Department {
         }
     }
 
+    /*
+     * "Forced" vacation i.e., for all employees that take vacation, make them do this.
+     */
+
+    public void holidayBreak() {
+        for (int i = 0; i < currentIndex; i++) {
+            // if employees[i] is really pointing to a SalariedEmployee object
+            // downcast the reference to a more specific type SalariedEmployee
+            // this allows me to call SalariedEmployee specific methods, such as takeVacation()
+            if (employees[i] instanceof SalariedEmployee) {
+                SalariedEmployee semp = (SalariedEmployee) employees[i];
+                semp.takeVacation();
+            }
+        }
+    }
+
     // helper method to add an Employee to the array
     public void addEmployee(Employee emp) {
         employees[currentIndex++] = emp;
