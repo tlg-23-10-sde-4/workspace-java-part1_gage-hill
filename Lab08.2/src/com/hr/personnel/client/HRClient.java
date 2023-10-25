@@ -26,10 +26,10 @@ class HRClient {
         System.out.println(dept);
 
         // add Employees to it
-        dept.addEmployee(new Employee("Jason", LocalDate.of(1990, 8, 24)));
-        dept.addEmployee(new Employee("Julie", LocalDate.of(2000, 2, 2)));
-        dept.addEmployee(new SalariedEmployee("Gage", LocalDate.of(2023, 10, 10), 100_000));
-        dept.addEmployee(new HourlyEmployee("Joe", LocalDate.of(2020, 11, 10), 100_000, 35.00));
+        dept.addEmployee(new HourlyEmployee("Julie", LocalDate.of(2000, 2, 2), 15.00, 40.00));
+        dept.addEmployee(new HourlyEmployee("Gage", LocalDate.of(2020, 11, 10), 35.00, 30.00));
+        dept.addEmployee(new SalariedEmployee("Jason", LocalDate.of(1990, 8, 24), 1175.00));
+        dept.addEmployee(new SalariedEmployee("Elizabeth", LocalDate.of(2023, 10, 10), 2700.00));
 
         // list its Employees
         System.out.println("\nList employees:");
@@ -38,5 +38,9 @@ class HRClient {
         // make its Employees work
         System.out.println("\nMake employees work:");
         dept.workEmployees();
+
+        // make its Employees pay
+        System.out.println("\nMake employees pay:");
+        dept.payEmployees();
     }
 }
