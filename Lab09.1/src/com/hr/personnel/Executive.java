@@ -19,6 +19,11 @@ public class Executive extends SalariedEmployee implements TaxPayer {
         super(name, hireDate, salary);
     }
 
+    @Override
+    public void fileReturn() {
+        System.out.println("Return filed electronically");
+    }
+
     // business "action" methods
     @Override
     public void work() {
