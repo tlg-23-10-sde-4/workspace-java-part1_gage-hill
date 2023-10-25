@@ -13,18 +13,21 @@ import gov.irs.TaxPayer;
 /**
  * Corporate entity - also pays taxes.
  */
-public class Corporation implements TaxPayer {
+public class Corporation implements TaxPayer { // Corporation IS-A TaxPayer
+    // fields
     private String name;
 
     public Corporation(String name) {
         setName(name);
     }
 
+    // business "action" methods
     @Override  // interface TaxPayer
     public void payTaxes() {
         System.out.println(getName() + " paid no taxes - we lobbied hard and it worked");
     }
 
+    // accessor "get/set" methods
     public String getName() {
         return name;
     }
