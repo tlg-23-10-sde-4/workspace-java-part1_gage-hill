@@ -56,9 +56,9 @@ public class PoemClient {
      * Use a try-with-resources to initialize the stream and auto-close it.
      */
     private static void writePoem() {
-        try (PrintWriter reader = new PrintWriter(new FileWriter("haiku.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("haiku.txt"))) {
             String line;
-            while ( (line = reader.readLine()) != null ) {
+            while ((line = reader.readLine()) != null) {
                 System.out.println(line);
             }
         }

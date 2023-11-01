@@ -1,6 +1,6 @@
 package com.coffee.client.CoffeeKioskArgs;
 
-import com.coffee.CoffeeKiosk.CoffeeKiosk;
+import com.coffee.CoffeeKiosk;
 
 class CoffeeKioskClientArgs {
 

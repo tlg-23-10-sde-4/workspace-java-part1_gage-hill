@@ -1,6 +1,6 @@
-package com.coffee.test.CoffeeKioskValidationTest;
+package com.coffee.test;
 
-import com.coffee.CoffeeKiosk.CoffeeKiosk;
+import com.coffee.CoffeeKiosk;
 
 class CoffeeKioskValidationTest {
 

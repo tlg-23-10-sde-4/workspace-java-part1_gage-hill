@@ -1,4 +1,4 @@
-package com.coffee.CoffeeKiosk;
+package com.coffee;
 
 public class CoffeeKiosk {
     private String coffeeType;          // constraint: ["espresso", "cappuccino", "iced"]

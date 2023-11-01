@@ -1,6 +1,6 @@
-package com.coffee.client.CoffeeKiosk;
+package com.coffee.client;
 
-import com.coffee.CoffeeKiosk.CoffeeKiosk;
+import com.coffee.CoffeeKiosk;
 
 public class CoffeeKioskClient {
     public static void main(String[] args) {
