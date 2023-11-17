@@ -1,8 +1,12 @@
-class Television {
+public class Television {
+    // Enum for valid brands
+    public enum Brand {
+        SAMSUNG, SONY, LG, TOSHIBA
+    }
+
     // static variables - shared among all instances, can only touch other static variables
     public static final int MIN_VOLUME = 0;
     public static final int MAX_VOLUME = 100;
-    public static final String[] VALID_BRANDS = { "Samsung", "Sony", "LG", "Toshiba" }; // DO NOT do it like this, use 'Enum' className
     private static int instanceCount = 0; // tracks the number of instances created
 
     // instance fields (attributes, properties)
@@ -16,6 +20,9 @@ class Television {
     // instanceCount = instanceCount + 1
     public Television() {
         instanceCount++;
+    }
+
+    public Television(String brand) {
     }
 
     public Television(String brand, int volume, DisplayType display) {
