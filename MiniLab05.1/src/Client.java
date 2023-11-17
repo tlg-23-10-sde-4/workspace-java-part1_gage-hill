@@ -1,16 +1,6 @@
-/*
- * This code is sample code, provided as-is, and we make no
- * warranties as to its correctness or suitability for any purpose.
- *
- * We hope that it's useful to you.  Enjoy.
- * Copyright LearningPatterns Inc.
- */
-
 class Client {
-
-    // you can run each of these independently, by uncommenting the one you want
     public static void main(String[] args) {
-        // passByValue();
+        passByValue();
         passByReference();
     }
 
@@ -36,3 +26,10 @@ class Client {
         System.out.println("Client: after the call, the marker is " + m1.getColor());
     }
 }
+/*
+ * passByValue() method demonstrates pass-by-value with primitive data types
+ * the original variable is not passed
+ *
+ * passByReference() method demonstrates pass-by-reference with an object
+ * affect the original copy
+ */
