@@ -1,19 +1,10 @@
-/*
- * This code is sample code, provided as-is, and we make no
- * warranties as to its correctness or suitability for any purpose.
- *
- * We hope that it's useful to you.  Enjoy.
- * Copyright LearningPatterns Inc.
- */
-
 import java.util.*;
 import java.time.*;
 
 class ConcertTimeTest {
-
     public static void main(String[] args) {
-        // listAvailableZoneIds();
-        // testLiveConcert();
+        listAvailableZoneIds();
+        testLiveConcert();
     }
 
     /*
@@ -29,14 +20,19 @@ class ConcertTimeTest {
         }
     }
 
-    /**
-     * OPTIONAL: your favorite band is playing live in Toronto, Canada on June 18, 2020, at 7pm.
-     * You live in Perth, Australia, and want to watch a live simulcast via the web.
-     * When are you watching it?
-     *
-     * RESULT: 
-     */
     public static void testLiveConcert() {
-        // TODO
+        // ZoneIds for Toronto and Perth
+        ZoneId torontoZone = ZoneId.of("America/Toronto");
+        ZoneId perthZone = ZoneId.of("Australia/Perth");
+
+        // LocalDateTime of the concert in Toronto
+        LocalDateTime concertTimeToronto = LocalDateTime.of(2020, Month.APRIL, 18, 19, 0);
+
+        // convert Toronto time to UTC
+        ZonedDateTime concertTimeUTC = concertTimeToronto.atZone(torontoZone).withZoneSameInstant(ZoneOffset.UTC);
+
+        // convert UTC time to Perth time
+        ZonedDateTime concertTimePerth = concertTimeUTC.withZoneSameInstant(perthZone);
+        System.out.println("Concert time in Perth: " + concertTimePerth);
     }
 }
