@@ -1,85 +1,90 @@
-/*
- * This code is sample code, provided as-is, and we make no
- * warranties as to its correctness or suitability for any purpose.
- *
- * We hope that it's useful to you.  Enjoy.
- * Copyright LearningPatterns Inc.
- */
-
 package com.entertainment;
 
 import com.entertainment.util.Useful;
-import java.util.Arrays;
 
-/**
- * Class definition to model the workings of a television set.
- * This is our "business class" in the lab series.
- * It does NOT have a main() method - most classes don't.
- */
-public class Television {
-    // CLASS (static) variables - these are shared among all instances
+class Television {
+    // static variables - shared among all instances, can only touch other static variables
     public static final int MIN_VOLUME = 0;
     public static final int MAX_VOLUME = 100;
-    public static final String[] VALID_BRANDS = { "Samsung", "LG", "Sony", "Toshiba" };
+    private static int instanceCount = 0; // tracks the number of instances created
 
-    private static int instanceCount = 0;
-
-    public static int getInstanceCount() {
-        return instanceCount;
+    // Enum for valid brands
+    public enum Brand {
+        SAMSUNG,
+        SONY,
+        LG,
+        TOSHIBA
     }
 
-    // PROPERTIES or ATTRIBUTES, generally called "fields" or "instance variables"
-    // these live *inside each instance*
-    private String brand;
+    // instance fields (attributes, properties) - live inside each new instance
+    private Brand brand;
     private int volume;
-    private DisplayType display = DisplayType.LED;
+    private DisplayType display;
+    private boolean isMuted;
+    private int oldVolume; // for managing mute state
 
-    // CONSTRUCTORS - special methods that get called when the client says "new"
+    // constructor methods - special methods that get called when the client says "new"
+    // instanceCount = instanceCount + 1
     public Television() {
         instanceCount++;
     }
 
-    public Television(String brand) {
-        this();             // delegate to no-arg ctor for instance count
-        setBrand(brand);
+    public Television(Brand brand) {
+        this(); // delegate to no-arg ctor for instance count
+        this.brand = brand;
     }
 
-    public Television(String brand, int volume) {
-        this(brand);        // delegate to other ctor above for brand
-        setVolume(volume);  // handle volume myself, by delegating to setter
+    public Television(Brand brand, int volume, DisplayType display) {
+        this(brand); // use 'this' when there are overlapping parameters
+        setVolume(volume); // handle volume myself, by delegating to setter
+        this.display = display;
     }
 
-    public Television(String brand, int volume, DisplayType display) {
-        this(brand, volume);
-        setDisplay(display);
+    // 'static' method
+    public static int getInstanceCount() {
+        return instanceCount;
     }
 
-    // BUSINESS METHODS (functions) - what operations can com.entertainment.Television objects do?
+    // business 'action' methods aka functions or operations
+    // What do Television 'objects' do?
+    // 'if/else' volume rang checking validation
+    public void mute() {
+        if (!isMuted) { // not currently muted
+            oldVolume = getVolume();
+            setVolume(MIN_VOLUME);
+            isMuted = true;
+        }
+        else {          // we are currently muted, so restore the volume from oldVolume
+            setVolume(oldVolume); // back to 32
+            isMuted = false;
+        }
+    }
+
     public void turnOn() {
-        // Useful is a public class in another package - good, because I need to use it here
         Useful.help();
-
-        boolean isConnected = verifyInternetConnection();
-        System.out.println("Turning on your " + brand + " television to volume " + volume);
+        if (verifyInternetConnection()) {
+            System.out.println("Turning on your " + this.brand + " TV to volume " + this.volume);
+        }
+        else {
+            System.out.println("Failed to turn on TV: No internet connection.");
+        }
     }
 
     public void turnOff() {
-        System.out.println("Shutting down...goodbye");
+        System.out.println("Shutting off... goodbye.");
     }
 
-    // ACCESSOR METHODS - these provide "controlled access" to the (private) fields
-    public String getBrand() {
+    // accessor methods - provide 'controlled access' to the object's fields
+    public boolean isMuted() {
+        return isMuted;
+    }
+
+    public Brand getBrand() {
         return brand;
     }
 
-    public void setBrand(String brand) {
-        if (isValidBrand(brand)) {
-            this.brand = brand;
-        }
-        else {
-            String brands = Arrays.toString(VALID_BRANDS);
-            System.out.println("Invalid brand: " + brand + ". Valid brands are " + brands + ".");
-        }
+    public void setBrand(Brand brand) {
+        this.brand = brand;
     }
 
     public int getVolume() {
@@ -87,12 +92,12 @@ public class Television {
     }
 
     public void setVolume(int volume) {
-        if (MIN_VOLUME <= volume && volume <= MAX_VOLUME) {
-            this.volume = volume;
+        if (MIN_VOLUME  <= volume && volume <= MAX_VOLUME) {
+            this.volume = volume;// set the volume only if it's within the valid range
+            isMuted = false; // automatically unmuted
         }
         else {
-            System.out.println("Invalid volume: " + volume + ". " +
-                    "Valid range is [" + MIN_VOLUME + "-" + MAX_VOLUME + "].");
+            System.out.printf("Invalid volume: %s. Must be between %s and %s.\n", volume, MIN_VOLUME, MAX_VOLUME);
         }
     }
 
@@ -104,27 +109,14 @@ public class Television {
         this.display = display;
     }
 
-    private static boolean isValidBrand(String brand) {
-        boolean isValid = false;
-
-        for (String validBrand : VALID_BRANDS) {
-            if (validBrand.equalsIgnoreCase(brand)) {
-                isValid = true;
-                break;
-            }
-        }
-        return isValid;
-    }
-
     private boolean verifyInternetConnection() {
+        // placeholder for method that would check internet connectivity
         return true;
     }
 
-    @Override
+    // provides a string representation of 'Television' object
     public String toString() {
-        return "com.entertainment.Television" +
-                ": brand=" + getBrand() +
-                ", volume=" + getVolume() +
-                ", display=" + getDisplay();
+        String volumeString = isMuted() ? "<muted>" : String.valueOf(volume);
+        return String.format("Television: brand=%s, volume=%s, display=%s", getBrand(), volumeString, getDisplay());
     }
 }
