@@ -1,19 +1,19 @@
 class TelevisionMuteTest {
-
     public static void main(String[] args) {
         Television tv = new Television();
-        tv.setBrand("Samsung");
+
+        tv.setBrand(Television.Brand.SAMSUNG);
         tv.setVolume(32);
         System.out.println(tv); //to() automatically called
 
-        tv.mute();  // mute it
+        tv.mute();  // mute tv
         System.out.println(tv);
 
-        tv.mute(); //unmute it -> volume should be back to 32
+        tv.mute(); //unmute tv -> volume should be back to 32
         System.out.println(tv);
 
-        tv.mute(); // mut it again
-        tv.setVolume(50); // should automatically unmute, and volume is now 50
+        tv.mute(); // mute tv again
+        tv.setVolume(50); // unmute and volume is 'set' to 50
         System.out.println(tv);
     }
 }

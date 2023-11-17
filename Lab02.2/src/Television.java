@@ -1,20 +1,23 @@
-public class Television {
-    // Enum for valid brands
-    public enum Brand {
-        SAMSUNG, SONY, LG, TOSHIBA
-    }
-
+class Television {
     // static variables - shared among all instances, can only touch other static variables
     public static final int MIN_VOLUME = 0;
     public static final int MAX_VOLUME = 100;
     private static int instanceCount = 0; // tracks the number of instances created
 
+    // Enum for valid brands
+    public enum Brand {
+        SAMSUNG,
+        SONY,
+        LG,
+        TOSHIBA
+    }
+
     // instance fields (attributes, properties)
-    private String brand; // default value for when client doesn't specify a value
+    private Brand brand;
     private int volume;
-    private DisplayType display = DisplayType.LED; // = DisplayType.LED is initialized meaning any new 'Television' object will have its display type set to 'LED'
+    private DisplayType display;
     private boolean isMuted;
-    private int oldVolume; // completely hidden, no get/set methods
+    private int oldVolume; // for managing mute state
 
     // constructors
     // instanceCount = instanceCount + 1
@@ -22,12 +25,15 @@ public class Television {
         instanceCount++;
     }
 
-    public Television(String brand) {
+    public Television(Brand brand) {
+        this();
+        this.brand = brand;
     }
 
-    public Television(String brand, int volume, DisplayType display) {
-        this.setBrand(brand); // use 'this' when there are overlapping parameters
+    public Television(Brand brand, int volume, DisplayType display) {
+        this(brand); // use 'this' when there are overlapping parameters
         setVolume(volume);
+        this.display = display;
     }
 
     // 'static' method
@@ -37,6 +43,7 @@ public class Television {
 
     // business 'action' methods aka functions or operations
     // What do Television 'objects' do?
+    // 'if/else' volume rang checking validation
     public void mute() {
         if (!isMuted) { // not currently muted
             oldVolume = getVolume();
@@ -50,8 +57,12 @@ public class Television {
     }
 
     public void turnOn() {
-        boolean isConnected = verifyInternetConnection();
-        System.out.println("Turning on your " + this.brand + " TV to volume " + this.volume);
+        if (verifyInternetConnection()) {
+            System.out.println("Turning on your " + this.brand + " TV to volume " + this.volume);
+        }
+        else {
+            System.out.println("Failed to turn on TV: No internet connection.");
+        }
     }
 
     public void turnOff() {
@@ -63,11 +74,11 @@ public class Television {
         return isMuted;
     }
 
-    public String getBrand() {
+    public Brand getBrand() {
         return brand;
     }
 
-    public void setBrand(String brand) {
+    public void setBrand(Brand brand) {
         this.brand = brand;
     }
 
@@ -98,11 +109,9 @@ public class Television {
         return true;
     }
 
-    // toString method
     // provides a string representation of 'Television' object
-    @Override
     public String toString() {
-        String volumeString = isMuted() ? "<muted>" : String.valueOf(getVolume());
+        String volumeString = isMuted() ? "<muted>" : String.valueOf(volume);
         return String.format("Television: brand=%s, volume=%s, display=%s", getBrand(), volumeString, getDisplay());
     }
 }

@@ -6,15 +6,15 @@ class TelevisionClient {
 
         // create an instance of Television and set its properties
         Television tv1 = new Television();
-        tv1.setBrand(Television.Brand.SAMSUNG.toString()); // using Enum for brand
+        tv1.setBrand(Television.Brand.SAMSUNG); // using Enum for brand
         tv1.setVolume(32);
         tv1.setDisplay(DisplayType.PLASMA);
 
         // create a 2nd instance of Television via the brand-volume ctor call
-        Television tv2 = new Television(Television.Brand.SAMSUNG.toString(), Television.MAX_VOLUME, DisplayType.OLED);
+        Television tv2 = new Television(Television.Brand.SAMSUNG, Television.MAX_VOLUME, DisplayType.OLED);
 
         // create a 3rd instance object by specifying only the brand in the ctor call
-        Television tv3 = new Television(Television.Brand.SONY.toString());
+        Television tv3 = new Television(Television.Brand.SONY);
 
         // call methods on tv1
         tv1.turnOn();

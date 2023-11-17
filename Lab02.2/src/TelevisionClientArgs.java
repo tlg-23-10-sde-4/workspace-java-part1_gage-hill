@@ -1,33 +1,13 @@
-/*
- * This code is sample code, provided as-is, and we make no
- * warranties as to its correctness or suitability for any purpose.
- *
- * We hope that it's useful to you.  Enjoy.
- * Copyright LearningPatterns Inc.
- */
-
 import java.util.Arrays;
 
-/*
- * Intended usage (by human):
- *  $ java TelevisionClientArgs <brand> <volume> <display>
- * 
- * Example:
- *  $ java TelevisionClientArgs Samsung 32 PLASMA
- *
- * GOAL:
- *  Create an instance of Television with the specifications (values) provided by the user.
- */
 class TelevisionClientArgs {
-
     public static void main(String[] args) {
-        // must first check for the presence of your (required) 3 arguments
-        if (args.length < 3) {
+        if (args.length < 3) { // must first check for the presence of your (required) 3 arguments, if it fails it prints usage instructions
             String usage = "Usage: java TelevisionClientArgs <brand> <volume> <display>";
             String example = "Example: java TelevisionClientArgs Samsung 32 PLASMA";
-            String note1 = "VALID_BRANDS are" + Arrays.toString(Television.VALID_BRANDS);
-            String note2 = String.format("Volume must be between %s to %s", Television.MIN_VOLUME, Television.MAX_VOLUME);
-            String note3 = "Note: supported displays are " + Arrays.toString(DisplayType.values());
+            String note1 = "Valid options are" + Arrays.toString(Television.Brand.values());
+            String note2 = String.format("Volume must be between [%s-%s].", Television.MIN_VOLUME, Television.MAX_VOLUME);
+            String note3 = "Valid options are " + Arrays.toString(DisplayType.values());
             System.out.println(usage);
             System.out.println(example);
             System.out.println(note1);
@@ -37,14 +17,54 @@ class TelevisionClientArgs {
         }
 
         // at this point, you can safely proceed, because you got your arguments
-        // first, let's just show that we got them
         System.out.println("You provided " + args.length + " arguments");
 
-        String brand = args[0];
-        int volume = Integer.parseInt(args[1]); //converts args string "volume" to int
-        DisplayType display = DisplayType.valueOf(args[2]);
+        // parsing and validating brand
+        Television.Brand brand;
+        try {
+            brand = Television.Brand.valueOf(args[0].toUpperCase()); // '.args[0]' is the first argument passed in, which is 'brand',
+                                                                     // brand argument converts the input string to uppercase because Enums are Uppercase()
+            //                                                          and then '.valueOf()' attempts to match with the 'Television.Brand' enum
+        }
+        catch (IllegalArgumentException e) {
+            System.out.println("Invalid brand. Valid options are: " + Arrays.toString(Television.Brand.values()));
+            return; // must 'return' otherwise the program will continue with an 'invalid brand'
+        }
 
-        Television tv = new Television(brand, volume, display);
-        System.out.println(tv);
+        // parsing and validation volume
+        int volume;
+        try {
+            volume = Integer.parseInt(args[1]);
+            if (volume < Television.MIN_VOLUME || volume > Television.MAX_VOLUME) {
+                throw new IllegalArgumentException("Volume out of range");
+            }
+        }
+        catch (NumberFormatException e) {
+            System.out.println("Volume must be an integer.");
+            return;
+        }
+        catch (IllegalArgumentException e) {
+            System.out.format("Invalid volume. Volume must be between %s to %s", Television.MIN_VOLUME, Television.MAX_VOLUME);
+            return;
+        }
+
+        // parsing and validation display type
+        DisplayType display = null;
+        try {
+            display = DisplayType.valueOf(args[2].toUpperCase());
+        }
+        catch (IllegalArgumentException e) {
+            System.out.println("Invalid display type. Valid options are " + Arrays.toString(DisplayType.values()));
+            return;
+        }
+
+        // validation for all parameters
+        if (brand != null && volume >= Television.MIN_VOLUME && volume <= Television.MAX_VOLUME && display != null) {
+            Television tv = new Television(brand, volume, display);
+            System.out.println(tv);
+        }
+        else {
+            System.out.println("Error: Missing or invalid input parameters.");
+        }
     }
 }
